@@ -19,6 +19,8 @@ class Parser(object):
     This parser supports RISON, RISON-A and RISON-O.
     """
     def parse(self, string, format=str):
+        if string == "(":
+            raise ParserException("unmatched '('")
         if format in [list, 'A']:
             self.string = "!({0})".format(string)
         elif format in [dict, 'O']:
@@ -81,8 +83,6 @@ class Parser(object):
                 self.index -= 1
             n = self.read_value()
             ar.append(n)
-
-        return ar
 
     def parse_bang(self):
         s = self.string
@@ -200,7 +200,6 @@ class Parser(object):
     def next(self):
         s = self.string
         i = self.index
-        c = None
 
         while 1:
             if i == len(s):

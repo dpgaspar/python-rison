@@ -31,6 +31,10 @@ class TestDecoder(unittest.TestCase):
         self.assertEqual(prison.loads('!t'), True)
         self.assertEqual(prison.loads('!f'), False)
 
+    def test_invalid(self):
+        with self.assertRaises(prison.decoder.ParserException):
+            prison.loads('(')
+
     def test_none(self):
         self.assertEqual(prison.loads('!n'), None)
 
